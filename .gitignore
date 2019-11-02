@@ -1,0 +1,5 @@
+/target
+**/*.rs.bk
+*.vtk
+*_output/
+Cargo.lock

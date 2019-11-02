@@ -1,0 +1,17 @@
+[package]
+name = "multiphysics_rs"
+version = "0.1.0"
+authors = ["dineshadepu <adepu.dinesh.a@gmail.com>"]
+edition = "2018"
+
+[lib]
+name = "multiphysics"
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+rayon = "1.2"
+neighbours_rs = { path = "../neighbours_rs" }
+simple_shapes = { path = "../simple_shapes" }
+indicatif = "0.12"
+rand = "0.7.2"
+approx = "0.3.2"
