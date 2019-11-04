@@ -62,6 +62,7 @@ macro_rules! write_to_vtk {
         // filename.push_str(".vtk");
         let x = &$dest.x;
         let y = &$dest.y;
+        let z = &$dest.z;
         let r = &$dest.radius;
 
         let _ = fs::remove_file($filename);
@@ -79,7 +80,7 @@ macro_rules! write_to_vtk {
 
         writeln!(file, "POINTS {} float", x.len()).unwrap();
         for i in 0..x.len() {
-            writeln!(file, "{:.4} {:.4} 0.0", x[i], y[i]).unwrap();
+            writeln!(file, "{:.4} {:.4} {:.4}", x[i], y[i], z[i]).unwrap();
         }
 
         writeln!(file, "POINT_DATA {}", x.len()).unwrap();
