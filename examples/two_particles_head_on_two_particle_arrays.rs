@@ -10,6 +10,8 @@ use multiphysics::{euler_step, make_forces_torques_zero, normal_force_dem, write
 
 // external crate imports
 use neighbours::nbs2d::NBS2D;
+use neighbours::NNPS;
+use rayon::prelude::*;
 
 fn main() {
     // create positions inside a box of 2d with dimension 0, 5 in x and 0, 5 in
@@ -74,8 +76,8 @@ fn main() {
     let total_steps = (tf / dt) as u64;
     let pb = setup_progress_bar(total_steps);
     while t < tf {
-        nbs2d_pa_left.register_particles_to_nbs2d_nnps(&pa_left.x, &pa_left.y);
-        nbs2d_pa_right.register_particles_to_nbs2d_nnps(&pa_right.x, &pa_right.y);
+        nbs2d_pa_left.register_particles_to_nnps(&pa_left.x, &pa_left.y, &pa_left.z);
+        nbs2d_pa_right.register_particles_to_nnps(&pa_right.x, &pa_right.y, &pa_right.z);
 
         make_forces_torques_zero!((pa_left, pa_right));
         normal_force_dem!(pa_left, (pa_right), (nbs2d_pa_right));

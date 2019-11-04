@@ -13,8 +13,11 @@ use multiphysics::{
 
 // external crate imports
 use neighbours::nbs2d::NBS2D;
+use neighbours::NNPS;
 use rand::Rng;
 use simple_shapes::{grid_arange, tank_2d, grid_linspace};
+use rayon::prelude::*;
+
 
 fn main() {
     let x_min = -5.;
@@ -87,7 +90,7 @@ fn main() {
     // create nbs for sand
     let mut nbs2d_wall = nbs2d.clone();
     nbs2d_wall.initialize_next(wall.x.len());
-    nbs2d_wall.register_particles_to_nbs2d_nnps(&wall.x, &wall.y);
+    nbs2d_wall.register_particles_to_nnps(&wall.x, &wall.y, &wall.z);
 
     // --------------------------------------
     // println!("{}", nbs2d_wall.head.len());
@@ -107,7 +110,7 @@ fn main() {
     let total_steps = (tf / dt) as u64;
     let pb = setup_progress_bar(total_steps);
     while t < tf {
-        nbs2d_sand.register_particles_to_nbs2d_nnps(&sand.x, &sand.y);
+        nbs2d_sand.register_particles_to_nnps(&sand.x, &sand.y, &sand.y);
 
         make_forces_torques_zero!((sand));
         body_force!((sand), 0.0, -9.81);

@@ -4,9 +4,11 @@ use multiphysics::setup_progress_bar;
 use multiphysics::{euler_step, make_forces_torques_zero, normal_force_dem, write_to_vtk};
 
 // external crate imports
-use neighbours::nbs2d::NBS2D;
 #[macro_use]
 extern crate approx;
+use neighbours::nbs2d::NBS2D;
+use neighbours::NNPS;
+use rayon::prelude::*;
 
 #[test]
 fn test_force_on_two_particles_overlapping() {
@@ -31,7 +33,7 @@ fn test_force_on_two_particles_overlapping() {
     // --------------------------------------
 
     // forces
-    nbs2d_pa.register_particles_to_nbs2d_nnps(&pa.x, &pa.y);
+    nbs2d_pa.register_particles_to_nnps(&pa.x, &pa.y, &pa.z);
     normal_force_dem!(pa, (pa), (nbs2d_pa));
 
     // since the overlap amount is

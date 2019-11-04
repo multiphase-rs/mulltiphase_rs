@@ -35,10 +35,10 @@ macro_rules! body_force{
 macro_rules! normal_force_dem {
     ($dest:ident, ($($sources:ident),*), ($($nnps:ident),*)) => {
         $(
-            use rayon::prelude::*;
             let d_radius = &$dest.radius;
             let d_x = &$dest.x;
             let d_y = &$dest.y;
+            let d_z = &$dest.z;
             let d_fx = &mut $dest.fx;
             let d_fy = &mut $dest.fy;
             let d_torz = &mut $dest.torz;
@@ -54,7 +54,7 @@ macro_rules! normal_force_dem {
                                     d_torz.par_iter_mut().enumerate()))
                 .for_each(|(d_fx_i, (d_fy_i, (i, d_tz_i)))| {
 
-                    let nbrs = $nnps.get_neighbours(d_x[i], d_y[i]);
+                    let nbrs = $nnps.get_neighbours(d_x[i], d_y[i], d_z[i]);
                     let mut xij_x;
                     let mut xij_y;
                     let mut dist;

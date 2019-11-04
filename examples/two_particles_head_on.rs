@@ -1,4 +1,3 @@
-use rand::Rng;
 use std::fs::OpenOptions;
 use std::io::Write;
 use std::fs;
@@ -10,6 +9,9 @@ use multiphysics::particle_array::{Particles};
 
 // external crate imports
 use neighbours::nbs2d::NBS2D;
+use neighbours::NNPS;
+use rayon::prelude::*;
+
 
 macro_rules! setup_particles_for_head_on_collision{
     ($dest:ident) => {
@@ -70,7 +72,7 @@ fn main() {
     let total_steps = (tf / dt) as u64;
     let pb = setup_progress_bar(total_steps);
     while t < tf {
-        nbs2d_pa.register_particles_to_nbs2d_nnps(&pa.x, &pa.y);
+        nbs2d_pa.register_particles_to_nnps(&pa.x, &pa.y, &pa.z);
 
         make_forces_torques_zero!((pa));
         normal_force_dem!(pa, (pa), (nbs2d_pa));
