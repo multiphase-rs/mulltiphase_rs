@@ -9,9 +9,10 @@ name = "multiphysics"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-rayon = "1.2"
+rayon = { git = "https://github.com/multiphase-rs/rayon", branch = "multizip" }
 neighbours_rs = { path = "../neighbours_rs" }
 simple_shapes = { path = "../simple_shapes" }
 indicatif = "0.12"
 rand = "0.7.2"
 approx = "0.3.2"
+cgmath = "0.17.0"

@@ -6,6 +6,7 @@ use std::fs;
 use multiphysics::{make_forces_torques_zero, normal_force_dem, euler_step, write_to_vtk};
 use multiphysics::setup_progress_bar;
 use multiphysics::particle_array::{Particles};
+use multiphysics::prelude::*;
 
 // external crate imports
 use neighbours::nbs2d::NBS2D;

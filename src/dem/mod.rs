@@ -14,7 +14,6 @@ macro_rules! make_forces_torques_zero{
         )*}
 }
 
-
 #[macro_export]
 macro_rules! body_force{
     (($($dest:ident), *), $gx: expr, $gy: expr) => {
@@ -48,11 +47,8 @@ macro_rules! normal_force_dem {
             let s_y = &$sources.y;
 
 
-            d_fx.par_iter_mut()
-                .zip(
-                    d_fy.par_iter_mut().zip(
-                                    d_torz.par_iter_mut().enumerate()))
-                .for_each(|(d_fx_i, (d_fy_i, (i, d_tz_i)))| {
+            multizip((d_fx, d_fy, d_torz.par_iter_mut().enumerate()))
+                .for_each(|(d_fx_i, d_fy_i, (i, d_torz_i))| {
 
                     let nbrs = $nnps.get_neighbours(d_x[i], d_y[i], d_z[i]);
                     let mut xij_x;
@@ -89,11 +85,11 @@ macro_rules! normal_force_dem {
                             }
 
                         }
-
                     }
                 });
         )*}
 }
+
 
 #[macro_export]
 macro_rules! euler_step{

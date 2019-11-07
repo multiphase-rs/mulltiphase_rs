@@ -1,14 +1,12 @@
 // local crate import
 use multiphysics::particle_array::Particles;
-use multiphysics::setup_progress_bar;
 use multiphysics::{euler_step, make_forces_torques_zero, normal_force_dem, write_to_vtk};
+use multiphysics::prelude::*;
+// use rayon::iter::multizip;
 
 // external crate imports
 #[macro_use]
 extern crate approx;
-use neighbours::nbs2d::NBS2D;
-use neighbours::NNPS;
-use rayon::prelude::*;
 
 #[test]
 fn test_force_on_two_particles_overlapping() {
