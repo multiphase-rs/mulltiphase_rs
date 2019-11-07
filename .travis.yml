@@ -3,7 +3,9 @@ rust:
   - stable
   - beta
   - nightly
-jobs:
-  allow_failures:
-    - rust: nightly
-  fast_finish: true
+os:
+  - linux
+  - osx
+script:
+  - cargo build -v
+  - cargo test -v
