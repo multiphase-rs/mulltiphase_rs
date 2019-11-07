@@ -10,8 +10,8 @@ name = "multiphysics"
 
 [dependencies]
 rayon = { git = "https://github.com/multiphase-rs/rayon", branch = "multizip" }
-neighbours_rs = { path = "../neighbours_rs" }
-simple_shapes = { path = "../simple_shapes" }
+neighbours_rs = { git = "https://github.com/multiphase-rs/neighbours_rs"}
+simple_shapes = { path = "https://github.com/multiphase-rs/simple_shapes" }
 indicatif = "0.12"
 rand = "0.7.2"
 approx = "0.3.2"
