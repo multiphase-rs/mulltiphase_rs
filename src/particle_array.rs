@@ -1,21 +1,21 @@
 pub struct Particles {
-    pub x: Vec<f32>,
-    pub y: Vec<f32>,
-    pub z: Vec<f32>,
-    pub m: Vec<f32>,
-    pub radius: Vec<f32>,
-    pub u: Vec<f32>,
-    pub v: Vec<f32>,
-    pub w: Vec<f32>,
-    pub wx: Vec<f32>,
-    pub wy: Vec<f32>,
-    pub wz: Vec<f32>,
-    pub fx: Vec<f32>,
-    pub fy: Vec<f32>,
-    pub fz: Vec<f32>,
-    pub torx: Vec<f32>,
-    pub tory: Vec<f32>,
-    pub torz: Vec<f32>,
+    pub x: Vec<f64>,
+    pub y: Vec<f64>,
+    pub z: Vec<f64>,
+    pub m: Vec<f64>,
+    pub radius: Vec<f64>,
+    pub u: Vec<f64>,
+    pub v: Vec<f64>,
+    pub w: Vec<f64>,
+    pub wx: Vec<f64>,
+    pub wy: Vec<f64>,
+    pub wz: Vec<f64>,
+    pub fx: Vec<f64>,
+    pub fy: Vec<f64>,
+    pub fz: Vec<f64>,
+    pub torx: Vec<f64>,
+    pub tory: Vec<f64>,
+    pub torz: Vec<f64>,
 }
 
 impl Particles {
@@ -40,7 +40,7 @@ impl Particles {
             torz: vec![0.; total_no_particles],
         }
     }
-    pub fn from_xyz_rad(x: &[f32], y: &[f32], z: &[f32], radius: &[f32]) -> Self {
+    pub fn from_xyz_rad(x: &[f64], y: &[f64], z: &[f64], radius: &[f64]) -> Self {
         let total_no_particles = x.len();
         let mut particles = Particles::new(total_no_particles);
         particles.x = x.to_vec();

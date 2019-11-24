@@ -1,3 +1,10 @@
+// std imports
+// these are used to write a file
+use std::fs;
+use std::fs::OpenOptions;
+use std::io::Write;
+
+
 // local crate functions and others
 pub use crate::{setup_progress_bar, ValidateParticleArray};
 // to write the output

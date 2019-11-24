@@ -1,5 +1,5 @@
 // std imports
-use std::f32::consts::PI;
+use std::f64::consts::PI;
 use std::fs;
 use std::fs::OpenOptions;
 use std::io::Write;
