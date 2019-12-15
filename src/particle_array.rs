@@ -52,7 +52,6 @@ impl Particles {
     }
 }
 
-
 #[macro_export]
 macro_rules! write_to_vtk {
     ($dest:ident, $filename:expr) => {
@@ -84,10 +83,100 @@ macro_rules! write_to_vtk {
         }
 
         writeln!(file, "POINT_DATA {}", x.len()).unwrap();
-        writeln!(file, "SCALARS Diameter float 1").unwrap();
+        writeln!(file, "SCALARS Radius float 1").unwrap();
         writeln!(file, "LOOKUP_TABLE default").unwrap();
         for i in 0..x.len() {
             writeln!(file, "{:.4}", r[i]).unwrap();
         }
     };
+}
+
+#[macro_export]
+macro_rules! write_nnps_3d_to_vtk {
+    ($dest:ident, $filename:expr) => {
+        let _ = fs::remove_file($filename);
+
+        let mut file = OpenOptions::new()
+            .read(true)
+            .write(true)
+            .create(true)
+            .open($filename)
+            .unwrap();
+
+        writeln!(file, "# vtk DataFile Version 3.0").unwrap();
+        writeln!(file, "NNPS 2D grid").unwrap();
+        writeln!(file, "ASCII\nDATASET STRUCTURED_POINTS").unwrap();
+
+        writeln!(
+            file,
+            "DIMENSIONS {:.4} {:.4} {:.4}",
+            $dest.no_x_cells + 1,
+            $dest.no_y_cells + 1,
+            $dest.no_z_cells + 2
+        )
+        .unwrap();
+
+        // origin
+        let x_origin = ($dest.x_max - $dest.x_min) / 2.;
+        let y_origin = ($dest.y_max - $dest.y_min) / 2.;
+        let z_origin = ($dest.z_max - $dest.z_min) / 2.;
+
+        writeln!(file, "ORIGIN {:.4} {:.4} {:.4}", x_origin, y_origin, z_origin).unwrap();
+
+        if
+        writeln!(file, "SPACING {:.4} {:.4} 0", x_spacing, y_spacing, z_spacing).unwrap();
+    };
+}
+
+
+#[macro_export]
+macro_rules! write_nnps_2d_to_vtk {
+    ($dest:ident, $filename:expr) => {
+        let _ = fs::remove_file($filename);
+
+        let mut file = OpenOptions::new()
+            .read(true)
+            .write(true)
+            .create(true)
+            .open($filename)
+            .unwrap();
+
+        writeln!(file, "# vtk DataFile Version 3.0").unwrap();
+        writeln!(file, "NNPS 2D grid").unwrap();
+        writeln!(file, "ASCII\nDATASET STRUCTURED_POINTS").unwrap();
+
+        writeln!(
+            file,
+            "DIMENSIONS {:.4} {:.4} {:.4}",
+            $dest.no_x_cells + 1,
+            $dest.no_y_cells + 1,
+            2
+        )
+        .unwrap();
+
+        // origin
+        let x_origin = - ($dest.x_max - $dest.x_min) / 2.;
+        let y_origin = - ($dest.y_max - $dest.y_min) / 2.;
+
+        writeln!(file, "ORIGIN {:.4} {:.4} 0.", x_origin, y_origin).unwrap();
+
+        writeln!(file, "SPACING {:.4} {:.4} 0.", $dest.cell_size, $dest.cell_size).unwrap();
+    };
+}
+
+
+#[test]
+#[ignore]
+fn test_nbs2d_to_vtk_file() {
+    use neighbours::prelude::*;
+    use std::fs;
+    use std::fs::OpenOptions;
+    use std::io::Write;
+    // the dimensions of the simulation
+
+    let mut nbs2d =
+        NBS2D::from_maximum_and_no_of_particles(0.26, 0.01, 3500);
+
+    // check the number of total cells
+    write_nnps_2d_to_vtk!(nbs2d, format!("nbs_2d.vtk"));
 }
