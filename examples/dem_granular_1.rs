@@ -100,8 +100,11 @@ fn main() {
     let dt = 1e-4;
     let mut t = 0.;
     let tf = 1.;
+    let total_steps = (tf / dt) as u64;
     let mut step_no = 0;
-    let pfreq = 100;
+    let total_output_file = 100;
+    let pfreq = total_steps / total_output_file;
+    // let pfreq = 100;
 
     let project_root = env!("CARGO_MANIFEST_DIR");
     let dir_name = project_root.to_owned() + "/dem_granular_1_output";
@@ -118,10 +121,10 @@ fn main() {
         normal_force_dem!(sand, (sand, wall), (nbs2d_sand, nbs2d_wall));
         euler_step!((sand), dt);
 
-        // if step_no % pfreq == 0 {
-        //     write_to_vtk!(sand, format!("{}/sand_{}.vtk", &dir_name, step_no));
-        //     write_to_vtk!(wall, format!("{}/wall_{}.vtk", &dir_name, step_no));
-        // }
+        if step_no % pfreq == 0 {
+            write_to_vtk!(sand, format!("{}/sand_{}.vtk", &dir_name, step_no));
+            write_to_vtk!(wall, format!("{}/wall_{}.vtk", &dir_name, step_no));
+        }
         step_no += 1;
         t += dt;
 

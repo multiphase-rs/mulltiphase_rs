@@ -47,7 +47,8 @@ macro_rules! normal_force_dem {
             let s_y = &$sources.y;
 
 
-            multizip((d_fx, d_fy, d_torz.par_iter_mut().enumerate()))
+            (d_fx, d_fy, d_torz.par_iter_mut().enumerate())
+                .into_par_iter()
                 .for_each(|(d_fx_i, d_fy_i, (i, d_torz_i))| {
 
                     let nbrs = $nnps.get_neighbours(d_x[i], d_y[i], d_z[i]);

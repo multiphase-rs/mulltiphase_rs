@@ -15,7 +15,6 @@ pub use crate::paraview::{write_vis_file};
 // external crate imports for usage in other crates
 pub use cgmath::*;
 pub use rayon::prelude::*;
-pub use rayon::iter::multizip;
 pub use neighbours::prelude::*;
 pub use simple_shapes::prelude::*;
 pub use indicatif::{ProgressBar, ProgressStyle};
